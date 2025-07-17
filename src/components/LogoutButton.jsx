@@ -5,10 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { logout } from "../features/auth/authslice";
 import { toast } from "react-toastify";
 import Button from "@mui/material/Button";
+import { useQueryClient } from "@tanstack/react-query";
 
 const LogoutButton = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const handleLogout = async () => {
     try {
@@ -17,6 +19,7 @@ const LogoutButton = () => {
       });
 
       dispatch(logout()); // Clears accessToken and user from redux
+      queryClient.removeQueries(["currentUser"]);
       toast.success("Logged out successfully!");
       navigate("/login"); // Redirect to login page
     } catch (err) {

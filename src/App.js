@@ -9,6 +9,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import AuthGuard from "./components/AuthGuard";
 import Navbar from "./components/Navbar";
+import Permissions from "./components/Permission";
 
 const queryClient = new QueryClient();
 
@@ -25,12 +26,14 @@ function App() {
             path="/projects"
             element={
               <AuthGuard>
-                <Navbar />
-                <ProjectsPage />
+                <Permissions>
+                  <Navbar />
+                  <ProjectsPage />
+                </Permissions>
               </AuthGuard>
             }
           />
-          
+
           {/* Optionally add a redirect */}
           <Route path="*" element={<LoginPage />} />
         </Routes>

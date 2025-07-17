@@ -30,8 +30,10 @@ import {
 import ProjectForm from "../components/ProjectForm";
 import { toast } from "react-toastify";
 
-const ProjectsPage = () => {
+const ProjectsPage = ({ permissions }) => {
   const dispatch = useDispatch();
+
+  console.log(permissions);
 
   // Redux state
   const page = useSelector((state) => state.project.page);
@@ -151,20 +153,21 @@ const ProjectsPage = () => {
             }}
           />
         </Box>
-
-        <Button
-          variant="contained"
-          color="primary"
-          sx={{
-            height: 40,
-            minWidth: 120,
-            fontSize: 16,
-            alignSelf: { xs: "stretch", sm: "center" },
-          }}
-          onClick={handleAddClick}
-        >
-          Add Project
-        </Button>
+        {permissions.includes("canCreateProjects") && (
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{
+              height: 40,
+              minWidth: 120,
+              fontSize: 16,
+              alignSelf: { xs: "stretch", sm: "center" },
+            }}
+            onClick={handleAddClick}
+          >
+            Add Project
+          </Button>
+        )}
       </Box>
       <TableContainer component={Paper} sx={{ mt: 3, minHeight: 200 }}>
         {loading ? (
@@ -202,7 +205,10 @@ const ProjectsPage = () => {
                   </IconButton>
                 </TableCell>
                 <TableCell sx={{ width: "100px" }}>Updated At</TableCell>
-                <TableCell>Actions</TableCell>
+                {permissions.includes("canEditProjects") ||
+                permissions.includes("canDeleteProjects") ? (
+                  <TableCell>Actions</TableCell>
+                ) : null}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -228,12 +234,18 @@ const ProjectsPage = () => {
                     </TableCell>
                     <TableCell>
                       <Box sx={{ display: "flex", gap: 1 }}>
-                        <IconButton onClick={() => handleEditClick(project)}>
-                          <Edit />
-                        </IconButton>
-                        <IconButton onClick={() => handleDelete(project?._id)}>
-                          <Delete color="error" />
-                        </IconButton>
+                        {permissions.includes("canEditProjects") && (
+                          <IconButton onClick={() => handleEditClick(project)}>
+                            <Edit />
+                          </IconButton>
+                        )}
+                        {permissions.includes("canDeleteProjects") && (
+                          <IconButton
+                            onClick={() => handleDelete(project?._id)}
+                          >
+                            <Delete color="error" />
+                          </IconButton>
+                        )}
                       </Box>
                     </TableCell>
                   </TableRow>
