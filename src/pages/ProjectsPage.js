@@ -32,7 +32,7 @@ import { toast } from "react-toastify";
 
 const ProjectsPage = ({ permissions }) => {
   const dispatch = useDispatch();
-
+//this is the ProjectsPage component
   console.log(permissions);
 
   // Redux state
