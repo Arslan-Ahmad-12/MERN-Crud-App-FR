@@ -14,8 +14,6 @@ const Navbar = ({permissions}) => {
 
   console.log("permissionsdsf", permissions);
 
-  const { data: currentUser } = useCurrentUser();
-
   const user = useSelector((state) => state.auth.user);
 
   const { mutate: createUser, isLoading } = useMutation({
