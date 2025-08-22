@@ -4,9 +4,7 @@ import CreateUserDialog from "./CreateUserDialog";
 import { useMutation } from "@tanstack/react-query";
 import API from "../api/axiosInstance";
 import { toast } from "react-toastify";
-
 import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
-import { useCurrentUser } from "../api/projectApi";
 import { useSelector } from "react-redux";
 
 const Navbar = ({permissions}) => {
